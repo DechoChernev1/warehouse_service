@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.0
+      author: decho
+      tagDatabase:
+        tag: "version_1.0"
+      changes:
+        - createTable:
+            tableName: warehouse
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: warehouse_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: warehouse_identifier
+                  type: varchar(45)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: timestamp
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: produced_messages
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: msg_key
+                  type: uuid
+                  constraints:
+                    unique: true
+                    nullable: true
+              - column:
+                  name: status
+                  type: varchar(150)
+                  constraints:
+                    nullable: true
+              - column:
+                  name: payload
+                  type: varchar
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated
+                  type: timestamp
+                  constraints:
+                    nullable: false
+      rollback:
+        - dropTable:
+            tableName: warehouse, produced_messages
+
+
+
+

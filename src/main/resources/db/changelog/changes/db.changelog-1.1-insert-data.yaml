@@ -1,0 +1,83 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1.1
+      author: decho
+      changes:
+        - insert:
+            tableName: warehouse
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: warehouse_name
+                  value: "New York Warehouse"
+              - column:
+                  name: warehouse_identifier
+                  value: "NY123"
+              - column:
+                  name: created
+                  valueDate: "2023-10-01T00:00:00"
+              - column:
+                  name: updated
+                  valueDate: "2023-10-01T00:00:00"
+        - insert:
+            tableName: warehouse
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: warehouse_name
+                  value: "Los Angeles Warehouse"
+              - column:
+                  name: warehouse_identifier
+                  value: "LA456"
+              - column:
+                  name: created
+                  valueDate: "2023-10-01T00:00:00"
+              - column:
+                  name: updated
+                  valueDate: "2023-10-01T00:00:00"
+        - insert:
+            tableName: produced_messages
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 1
+              - column:
+                  name: msg_key
+                  value: "550e8400-e29b-41d4-a716-446655440000"
+              - column:
+                  name: status
+                  value: "Processed"
+              - column:
+                  name: payload
+                  value: '{"product":"Apples", "quantity":100, "destination":"New York"}'
+              - column:
+                  name: created
+                  valueDate: "2023-10-01T00:00:00"
+              - column:
+                  name: updated
+                  valueDate: "2023-10-01T00:00:00"
+        - insert:
+            tableName: produced_messages
+            columns:
+              - column:
+                  name: id
+                  valueNumeric: 2
+              - column:
+                  name: msg_key
+                  value: "d94a0dfc-ae8f-441e-b2cc-b6d9c1c5b3b9"
+              - column:
+                  name: status
+                  value: "Pending"
+              - column:
+                  name: payload
+                  value: '{"product":"Oranges", "quantity":200, "destination":"Los Angeles"}'
+              - column:
+                  name: created
+                  valueDate: "2023-10-01T00:00:00"
+              - column:
+                  name: updated
+                  valueDate: "2023-10-01T00:00:00"
