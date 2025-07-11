@@ -5,6 +5,7 @@ import com.rewe.warehouseservice.data.entities.Warehouse;
 import com.rewe.warehouseservice.data.repositories.WarehouseRepository;
 import com.rewe.warehouseservice.dtos.WarehouseDTO;
 import com.rewe.warehouseservice.services.WarehouseService;
+import com.rewe.warehouseservice.services.kafka.KafkaSenderService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,20 @@ import java.util.Optional;
 public class WarehouseServiceImpl implements WarehouseService {
     private final WarehouseRepository warehouseRepository;
     private final WarehouseMapper warehouseMapper;
+    private final KafkaSenderService kafkaSenderService;
 
-    public WarehouseServiceImpl(WarehouseRepository warehouseRepository, WarehouseMapper warehouseMapper) {
+    public WarehouseServiceImpl(
+            WarehouseRepository warehouseRepository,
+            WarehouseMapper warehouseMapper,
+            KafkaSenderService kafkaSenderService) {
         this.warehouseRepository = warehouseRepository;
         this.warehouseMapper = warehouseMapper;
+        this.kafkaSenderService = kafkaSenderService;
     }
 
     @Override
     public List<WarehouseDTO> findAllWarehouses() {
+        kafkaSenderService.send("warehouses");
         return warehouseRepository.findAll()
                 .stream()
                 .map(warehouseMapper::warehouseToWarehouseDtо)

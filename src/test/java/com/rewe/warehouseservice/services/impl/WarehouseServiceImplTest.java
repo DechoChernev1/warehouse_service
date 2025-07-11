@@ -5,6 +5,8 @@ import com.rewe.warehouseservice.config.WarehouseMapperImpl;
 import com.rewe.warehouseservice.data.entities.Warehouse;
 import com.rewe.warehouseservice.data.repositories.WarehouseRepository;
 import com.rewe.warehouseservice.dtos.WarehouseDTO;
+import com.rewe.warehouseservice.services.kafka.KafkaSenderService;
+import org.apache.kafka.clients.producer.KafkaProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -21,7 +23,8 @@ import static org.mockito.Mockito.*;
 class WarehouseServiceImplTest {
     private final WarehouseMapper warehouseMapper = Mockito.spy(WarehouseMapperImpl.class);
     private final WarehouseRepository warehouseRepository = Mockito.mock(WarehouseRepository.class);
-    private final WarehouseServiceImpl warehouseService = new WarehouseServiceImpl(warehouseRepository, warehouseMapper);
+    private final KafkaSenderService kafkaSenderService = Mockito.mock(KafkaSenderService.class);
+    private final WarehouseServiceImpl warehouseService = new WarehouseServiceImpl(warehouseRepository, warehouseMapper, kafkaSenderService);
 
     private Warehouse warehouse;
     private WarehouseDTO warehouseDTO;
