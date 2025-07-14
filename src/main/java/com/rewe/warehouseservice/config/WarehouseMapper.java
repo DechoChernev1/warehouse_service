@@ -7,6 +7,6 @@ import org.mapstruct.MappingConstants;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface WarehouseMapper {
-    WarehouseDTO warehouseToWarehouseDtо(Warehouse warehouse);
-    Warehouse warehouseDtoToWarehouse(WarehouseDTO warehouseDTO);
+    WarehouseDTO warehouseToWarehouseDTO(Warehouse warehouse);
+    Warehouse warehouseDTOToWarehouse(WarehouseDTO warehouseDTO);
 }

@@ -8,12 +8,14 @@ import com.rewe.warehouseservice.services.WarehouseService;
 import com.rewe.warehouseservice.services.kafka.KafkaSenderService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class WarehouseServiceImpl implements WarehouseService {
     private final WarehouseRepository warehouseRepository;
     private final WarehouseMapper warehouseMapper;
@@ -30,25 +32,26 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public List<WarehouseDTO> findAllWarehouses() {
+        log.info("Before send kafka msg");
         kafkaSenderService.send("warehouses");
         return warehouseRepository.findAll()
                 .stream()
-                .map(warehouseMapper::warehouseToWarehouseDtо)
+                .map(warehouseMapper::warehouseToWarehouseDTO)
                 .toList();
     }
 
     @Override
     public WarehouseDTO findWarehouseById(Integer id) {
         return warehouseRepository.findById(id)
-                .map(warehouseMapper::warehouseToWarehouseDtо)
+                .map(warehouseMapper::warehouseToWarehouseDTO)
                 .orElseThrow(EntityExistsException::new);
     }
 
     @Override
     public WarehouseDTO saveWarehouse(WarehouseDTO warehouseDTO) {
-        Warehouse warehouseEntity = warehouseMapper.warehouseDtoToWarehouse(warehouseDTO);
+        Warehouse warehouseEntity = warehouseMapper.warehouseDTOToWarehouse(warehouseDTO);
         Warehouse savedWarehouse = warehouseRepository.save(warehouseEntity);
-        return warehouseMapper.warehouseToWarehouseDtо(savedWarehouse);
+        return warehouseMapper.warehouseToWarehouseDTO(savedWarehouse);
     }
 
     @Override
@@ -59,7 +62,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             warehouseToUpdate.setWarehouseName(warehouseDTO.getWarehouseName());
             warehouseToUpdate.setWarehouseIdentifier(warehouseDTO.getWarehouseIdentifier());
             Warehouse updatedWarehouse = warehouseRepository.save(warehouseToUpdate);
-            return warehouseMapper.warehouseToWarehouseDtо(updatedWarehouse);
+            return warehouseMapper.warehouseToWarehouseDTO(updatedWarehouse);
         }
         throw new EntityNotFoundException("Warehouse not found for id: " + id);
     }

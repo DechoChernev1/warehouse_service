@@ -6,9 +6,9 @@ import com.rewe.warehouseservice.data.entities.Warehouse;
 import com.rewe.warehouseservice.data.repositories.WarehouseRepository;
 import com.rewe.warehouseservice.dtos.WarehouseDTO;
 import com.rewe.warehouseservice.services.kafka.KafkaSenderService;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -38,7 +38,7 @@ class WarehouseServiceImplTest {
         warehouse.setWarehouseIdentifier(UUID.randomUUID().toString());
         warehouse.setCreated(Instant.now());
         warehouse.setUpdated(Instant.now());
-        warehouseDTO = warehouseMapper.warehouseToWarehouseDtо(warehouse);
+        warehouseDTO = warehouseMapper.warehouseToWarehouseDTO(warehouse);
     }
 
     @Test
@@ -51,7 +51,7 @@ class WarehouseServiceImplTest {
         assertEquals(1, result.size());
         assertEquals(warehouseDTO.getId(), result.get(0).getId());
         verify(warehouseRepository).findAll();
-        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDtо(warehouse);
+        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDTO(warehouse);
     }
 
     @Test
@@ -63,7 +63,7 @@ class WarehouseServiceImplTest {
         assertNotNull(result);
         assertEquals(warehouseDTO.getId(), result.getId());
         verify(warehouseRepository).findById(1);
-        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDtо(warehouse);
+        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDTO(warehouse);
     }
 
     @Test
@@ -76,7 +76,7 @@ class WarehouseServiceImplTest {
         assertEquals(warehouseDTO.getId(), result.getId());
         assertEquals(warehouseDTO.getWarehouseName(), result.getWarehouseName());
         verify(warehouseRepository, times(1)).save(any(Warehouse.class));
-        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDtо(warehouse);
+        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDTO(warehouse);
     }
 
     @Test
@@ -94,7 +94,7 @@ class WarehouseServiceImplTest {
         assertEquals("Updated", result.getWarehouseName());
         verify(warehouseRepository).findById(1);
         verify(warehouseRepository).save(warehouse);
-        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDtо(warehouse);
+        verify(warehouseMapper, atLeast(1)).warehouseToWarehouseDTO(warehouse);
     }
 
     @Test
