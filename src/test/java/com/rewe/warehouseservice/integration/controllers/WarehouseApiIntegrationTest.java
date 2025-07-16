@@ -24,7 +24,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = WarehouseServiceApplication.class,webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class WarehouseControllerIntegrationTest {
+public class WarehouseApiIntegrationTest {
     @LocalServerPort
     int randomServerPort;
 

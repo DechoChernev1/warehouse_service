@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,8 +19,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-public class ProducedMessages extends BaseEntity {
-    @Column(unique=true)
+public class ProducedMessages extends BaseEntity implements Serializable {
+    @Column(unique = true)
     private UUID msgKey;
     private String status;
     private String payload;
